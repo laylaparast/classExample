@@ -6,10 +6,6 @@ output:
     toc: yes
     toc_float: yes
 ---
-
-```{r global_options, echo=FALSE}
-knitr::opts_chunk$set(fig.height=3, fig.width=4, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60))
-```
 Note that I added a table of contents compared to the class version. toc_float puts it to the side, play around with removing it. 
 
 If you have some packages you want to load, you can do them here (instead of doing it further down right before we plot something.)
