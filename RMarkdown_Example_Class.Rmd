@@ -1,0 +1,175 @@
+---
+title: "Adoption Data"
+author: "Layla Parast"
+output:
+  html_document:
+    toc: yes
+    toc_float: yes
+---
+
+```{r global_options, echo=FALSE}
+knitr::opts_chunk$set(fig.height=3, fig.width=4, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60))
+```
+Note that I added a table of contents compared to the class version. toc_float puts it to the side, play around with removing it. 
+
+If you have some packages you want to load, you can do them here (instead of doing it further down right before we plot something.)
+
+```{r}
+library(ggplot2)
+```
+
+You can hide it like this (won't show). 
+
+```{r echo=FALSE}
+library(ggplot2)
+```
+
+
+# **1. Dataset Information**
+
+The __shelter.csv__ dataset contains variables collected from adult cats and dogs that were adopted at the Austin Animal shelter over the course of one month.
+
+First, you'll want to import in the dataset (note that the default working directory is the folder in which this .Rmd file is located):
+
+```{r}
+shelter <- read.csv('shelter.csv')
+```
+
+Let's get a summary of the variables:
+
+```{r}
+summary(shelter)
+```
+
+## **Cases** ##
+Let's look at a few rows of the dataset: 
+```{r}
+head(shelter)
+```
+
+# **2. Making Tables**
+
+You can create a table manually like the example below, which describes the variables in this dataset:
+
+ Variable | Description
+--------|------------------------------------------------------
+ID | Unique identifier
+Intake.Type | How animal arrived at the shelter
+Species | Dog or cat
+Sex | Female or male
+Age.Intake | Age (years) at intake
+Condition | Animal's health condition 
+Intake.Weight | Weight (lbs) at intake
+Adopted.Weight | Weight (lbs) at adoption
+Days.to.Adoption | Days spent in the shelter
+
+
+
+# **3. Code and Output**
+
+Code is run linearly (dependent on what is run above):
+
+```{r}
+mean(shelter$Days.to.Adoption)
+```
+
+You can suppress the code:
+
+```{r echo=FALSE}
+mean(shelter$Days.to.Adoption)
+```
+
+You can also suppress the output:
+
+```{r results='hide'}
+mean(shelter$Days.to.Adoption)
+```
+
+
+# **4. Graphs and Embedding Code**
+
+[Note that here I added the standard deviation and rounded to 2 decimal places.]
+
+[Also note that this is called "inline" R code - you will be asked to do it in your homework.]
+
+On average, animals spent `r mean(shelter$Days.to.Adoption)` days with a standard deviation of `r round(sd(shelter$Days.to.Adoption),2)` before being adopted.
+
+Code not hidden:
+
+```{r}
+# Make a histogram of days to adopt variable
+library(ggplot2)
+ggplot(shelter, aes(x=Days.to.Adoption)) +  geom_histogram(binwidth=10, col='black', fill='maroon') + xlab('Number of Days to Adoption') + ggtitle('Distribution of Days to Adoption') + theme_classic()
+```
+
+Code hidden and only plotting histogram:
+
+```{r echo = FALSE}
+# Make a histogram of days to adopt variable
+library(ggplot2)
+ggplot(shelter, aes(x=Days.to.Adoption)) +  geom_histogram(binwidth=10, col='black', fill='maroon') + xlab('Number of Days to Adoption') + ggtitle('Distribution of Days to Adoption') + theme_classic()
+```
+
+Make some text stand out like this:
+
+> _This has been a great day!_
+
+You can write some math equations like this: 
+
+Let $\alpha\ = 5$ and $\beta\ = 14$.
+
+# **5 Class Exercises, Part 2 **
+
+Pick another variable from this dataset and investigate if the number of days to adoption is related to it or not. I will pick the variable Condition which is equal to Normal, Injured, or Sick. The code below pulls from code used in class on August 29 and August 31.  
+```{r}
+aggregate(Days.to.Adoption~Condition, data=shelter, mean)
+```
+Dogs and cats that are not sick or injured seem to be adopted more quickly. The average days to adoption for Normal animals is `r mean(shelter$Days.to.Adoption[shelter$Condition == "Normal"])`, the average days to adoption for Injured animals is `r mean(shelter$Days.to.Adoption[shelter$Condition == "Injured"])`, and the average days to adoption for Sick animals is `r mean(shelter$Days.to.Adoption[shelter$Condition == "Sick"])`.
+
+Here is another way to do it: 
+
+```{r}
+mytable = aggregate(Days.to.Adoption~Condition, data=shelter, mean)
+
+my.table = table(shelter$Condition)
+my.table
+library(kableExtra)
+kable_styling(kbl(my.table, col.names = c("Animal Condition", "My Count")), full_width=FALSE)
+
+```
+The average days to adoption for Normal animals is `r mytable[2,2]`, the average days to adoption for Injured animals is `r mytable[1,2]`, and the average days to adoption for Sick animals is `r mytable[3,2]`.
+
+Now let's make a plot. This is one numeric and one categorical variable. 
+
+```{r}
+ ggplot(shelter) + geom_histogram(aes(x=Days.to.Adoption),fill='pink', bins = 20)  + labs(title='Days to Adoption by Condition',x='Days to Adoption',y='Frequency') + theme(legend.position='bottom') + facet_wrap(~Condition)
+```
+
+Present your statistics in a bulleted list. Note that spacing and tabs in the text below is VERY important. If you don't have a space between * and The, it won't work. If the spacing is off for the +, it won't work.
+
+
+* The average days to adoption by condition is:
+  +  `r round(mean(shelter$Days.to.Adoption[shelter$Condition == "Normal"]),2)` for Normal animals
+  +  `r round(mean(shelter$Days.to.Adoption[shelter$Condition == "Injured"]),2)` for Injured animals
+  +  `r round(mean(shelter$Days.to.Adoption[shelter$Condition == "Sick"]),2)` for Sick animals
+ 
+Include a hyperlink that takes you to the Austin Animal Shelter's website.
+
+Go [here](https://www.austintexas.gov/austin-animal-center) to learn more! 
+
+Include a picture of a cute cat or dog. You must have the file of the photo you are using *in your working directory*.
+
+
+```{r}
+my.tab = table(shelter$Condition)
+my.tab
+library(kableExtra)
+my.new.tab = kbl(my.tab)
+my.new.tab = kbl(my.tab, col.names = c("Condition", "Count"))
+kable_styling(my.new.tab)
+```
+
+Look at this cute dog: 
+
+![](cutedog.jpeg)
+---------
