@@ -24,6 +24,8 @@ You can hide it like this (won't show).
 library(ggplot2)
 ```
 
+# **1. Make a new header **
+
 
 # **1. Dataset Information**
 
