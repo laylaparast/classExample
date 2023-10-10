@@ -8,7 +8,7 @@ output:
 ---
 
 ```{r global_options, echo=FALSE}
-knitr::opts_chunk$set(fig.height=3, fig.width=4, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60))
+knitr::opts_chunk$set(warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60))
 ```
 Note that I added a table of contents compared to the class version. toc_float puts it to the side, play around with removing it. 
 
