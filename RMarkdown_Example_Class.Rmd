@@ -6,9 +6,9 @@ output:
     toc: yes
     toc_float: yes
 ---
-Note that I added a table of contents compared to the class version. toc_float puts it to the side, play around with removing it. 
+Note that I added a table of contents compared to the class version. 
 
-If you have some packages you want to load, you can do them here (instead of doing it further down right before we plot something.)
+If you have some packages you want to load, you can do them here (instead of doing it further down right before we plot something.) This is helpful for reproducibility.
 
 ```{r}
 library(ggplot2)
